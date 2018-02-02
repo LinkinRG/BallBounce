@@ -61,7 +61,7 @@ public class BallController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        gameController.SpawnPlatform();
+        //gameController.SpawnPlatform();
         platformController.ChangeSpeed(Time.time - time);
         hits++;
         Debug.Log("Time: " + (Time.time - time) + "; Vel : " + velocity + "; Acc: " + deltaVelocity + "; Hits: " + hits);
