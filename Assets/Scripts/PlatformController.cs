@@ -35,7 +35,7 @@ public class PlatformController : MonoBehaviour {
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).GetComponent<MoveDown>().speed = 2 / time;
+            transform.GetChild(i).GetComponent<MoveDown>().ChangeSpeed(time);
         }
     }
 

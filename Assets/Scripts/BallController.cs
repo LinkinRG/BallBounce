@@ -11,7 +11,8 @@ public class BallController : MonoBehaviour {
     [SerializeField] private PlatformController platformController;
     private Rigidbody rb;
     private float vel;
-    private float initialVelocity;
+    private Vector3 initialVelocity;
+    private bool first = true;
     private float initialDelta;
     private bool goingDown = false;
     private float mult;
@@ -24,35 +25,35 @@ public class BallController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         vel = 0;
         initialDelta = deltaVelocity;
-        initialVelocity = velocity;
+        //initialVelocity = velocity;
         time = Time.time - 0.62f;
         hits = 0;
         mult = 1;
     }
 	
 	
-	void FixedUpdate () {
-        if(vel <= 0)
-        {
-            goingDown = true;
-            vel = 0;
-        }
-        else if(vel >= velocity)
-        {
-            vel = velocity;
-        }
-        if(goingDown)
-        {
-            vel += deltaVelocity;
-            rb.velocity = new Vector3(0, -vel, 0);
+	//void FixedUpdate () {
+ //       if(vel <= 0)
+ //       {
+ //           goingDown = true;
+ //           vel = 0;
+ //       }
+ //       else if(vel >= velocity)
+ //       {
+ //           vel = velocity;
+ //       }
+ //       if(goingDown)
+ //       {
+ //           vel += deltaVelocity;
+ //           rb.velocity = new Vector3(0, -vel, 0);
             
-        } else
-        {
-            vel -= deltaVelocity;
-            rb.velocity = new Vector3(0, vel, 0);
-        }
+ //       } else
+ //       {
+ //           vel -= deltaVelocity;
+ //           rb.velocity = new Vector3(0, vel, 0);
+ //       }
         
-    }
+ //   }
 
     public float GetTime()
     {
@@ -61,19 +62,26 @@ public class BallController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        //gameController.SpawnPlatform();
-        platformController.ChangeSpeed(Time.time - time);
-        hits++;
-        Debug.Log("Time: " + (Time.time - time) + "; Vel : " + velocity + "; Acc: " + deltaVelocity + "; Hits: " + hits);
-        if(hits % 10 == 0)
+        if(first)
         {
-            mult += 0.1f;
-            velocity = initialVelocity * mult;
-            deltaVelocity = initialDelta * (mult * mult);
+            initialVelocity = rb.velocity;
+            first = false;
         }
+        //Time.timeScale += 0.1f;
+        rb.velocity = initialVelocity;
+        hits++;
+        Debug.Log("Time: " + (Time.time - time) + "; Hits: " + hits + "; Pos: " + transform.position.y);
+        //if(hits % 10 == 0)
+        //{
+        //    mult += 0.1f;
+        //    velocity = initialVelocity * mult;
+        //    deltaVelocity = initialDelta * (mult * mult);
+        //}
+        if(hits % 5 == 0) {
+            Time.timeScale += 0.1f;
+        }
+        if(!first) platformController.ChangeSpeed(2 / (Time.time - time));
         time = Time.time;
         goingDown = false;
-        vel = velocity;
-        rb.velocity = new Vector3(0, vel, 0);
     }
 }

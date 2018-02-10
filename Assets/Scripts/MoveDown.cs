@@ -6,18 +6,23 @@ public class MoveDown : MonoBehaviour
 
     public float speed;
     public float minY;
+    private Rigidbody rb;
 
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0, -speed, 0);
+    }
 
+    public void ChangeSpeed(float newSpeed) 
+    {        
+        rb.velocity = new Vector3(0, -newSpeed, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 nextPos = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
-        transform.position = nextPos;
         if(transform.position.y <= minY)
         {
             Destroy(gameObject);
