@@ -9,12 +9,10 @@ public class PlatformController : MonoBehaviour {
     public GameObject ball;
 
     private bool rotating;
-    private BallController ballController;
 
     // Use this for initialization
     void Start ()
     {
-        ballController = ball.GetComponent<BallController>();
 
     }
 	
