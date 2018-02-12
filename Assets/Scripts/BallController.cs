@@ -6,6 +6,9 @@ public class BallController : MonoBehaviour {
 
 
     [SerializeField] private PlatformController platformController;
+    [SerializeField] private GameController gameController;
+    [SerializeField] private float minY;
+
     private Rigidbody rb;
     private Vector3 initialVelocity;
     private bool first = true;
@@ -41,6 +44,9 @@ public class BallController : MonoBehaviour {
         } else if(Physics.Raycast(transform.position, Vector3.down, 0.5f)) {
             GetComponent<Collider>().isTrigger = false;
         }
+        if(transform.position.y <= minY) {
+            gameController.GameOver();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -63,5 +69,9 @@ public class BallController : MonoBehaviour {
             }
             time = Time.time;
         }
+    }
+
+    public int GetScore() {
+        return hits;
     }
 }
