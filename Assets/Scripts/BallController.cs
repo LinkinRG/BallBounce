@@ -25,19 +25,23 @@ public class BallController : MonoBehaviour {
         } else if(Physics.Raycast(transform.position, (Vector3.up + Vector3.forward).normalized, 1)) {
             GetComponent<Collider>().isTrigger = true;
         } else if(Physics.Raycast(transform.position, (Vector3.up + Vector3.back).normalized, 1)) {
-            GetComponent<Collider>().isTrigger = true;        
-        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, 1).normalized, 1)) {
-            GetComponent<Collider>().isTrigger = true;        
-        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, -1).normalized, 1)) {
-            GetComponent<Collider>().isTrigger = true;        
+            GetComponent<Collider>().isTrigger = true;
+        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, 0.5f).normalized, 1)) {
+            GetComponent<Collider>().isTrigger = true;
+        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, -0.5f).normalized, 1)) {
+            GetComponent<Collider>().isTrigger = true;
+        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, 5).normalized, 1)) {
+            GetComponent<Collider>().isTrigger = true;
+        } else if(Physics.Raycast(transform.position, new Vector3(0, 2, -5).normalized, 1)) {
+            GetComponent<Collider>().isTrigger = true;
         } else if(Physics.Raycast(transform.position, Vector3.back, 1)) {
-            GetComponent<Collider>().isTrigger = true;        
-        } else if(Physics.Raycast(transform.position, Vector3.back, 1)) {
-            GetComponent<Collider>().isTrigger = true;        
+            GetComponent<Collider>().isTrigger = true;
+        } else if(Physics.Raycast(transform.position, Vector3.forward, 1)) {
+            GetComponent<Collider>().isTrigger = true;
         } else if(Physics.Raycast(transform.position, Vector3.down, 0.5f)) {
             GetComponent<Collider>().isTrigger = false;
         }
-    }    
+    }
 
     private void OnCollisionEnter(Collision collision)
     {   
@@ -47,6 +51,9 @@ public class BallController : MonoBehaviour {
             {
                 initialVelocity = rb.velocity;
                 first = false;
+                platformController.ChangeSpeed(1 / (Time.time - time));
+            } else {
+                platformController.ChangeSpeed(2 / (Time.time - time));
             }
             rb.velocity = initialVelocity;
             hits++;
@@ -54,7 +61,6 @@ public class BallController : MonoBehaviour {
             if(hits % 5 == 0) {
                 Time.timeScale += 0.1f;
             }
-            if(!first) platformController.ChangeSpeed(2 / (Time.time - time));
             time = Time.time;
         }
     }

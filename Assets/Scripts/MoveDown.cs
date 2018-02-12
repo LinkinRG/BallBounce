@@ -16,7 +16,7 @@ public class MoveDown : MonoBehaviour
     }
 
     public void ChangeSpeed(float newSpeed) 
-    {        
+    {
         rb.velocity = new Vector3(0, -newSpeed, 0);
     }
 
