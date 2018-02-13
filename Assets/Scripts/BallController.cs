@@ -12,12 +12,13 @@ public class BallController : MonoBehaviour {
     private Rigidbody rb;
     private Vector3 initialVelocity;
     private bool first = true;
-    private float time;
     private int hits;
+    private float time;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
+        time = 0;
     }
 	
 	
@@ -57,17 +58,17 @@ public class BallController : MonoBehaviour {
             {
                 initialVelocity = rb.velocity;
                 first = false;
-                platformController.ChangeSpeed(1 / (Time.time - time));
+                platformController.ChangeSpeed(1 / (Time.timeSinceLevelLoad - time));
             } else {
-                platformController.ChangeSpeed(2 / (Time.time - time));
+                platformController.ChangeSpeed(2 / (Time.timeSinceLevelLoad - time));
             }
             rb.velocity = initialVelocity;
             hits++;
-            Debug.Log("Time: " + (Time.time - time) + "; Hits: " + hits + "; Pos: " + transform.position.y);
+            Debug.Log("Time: " + (Time.timeSinceLevelLoad - time) + "; Hits: " + hits + "; Pos: " + transform.position.y);
             if(hits % 5 == 0) {
                 Time.timeScale += 0.1f;
             }
-            time = Time.time;
+            time = Time.timeSinceLevelLoad;
         }
     }
 
