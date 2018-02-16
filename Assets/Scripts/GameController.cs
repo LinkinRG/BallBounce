@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         ballController = ball.GetComponent<BallController>();
-        SpawnPlatforms();
+        SpawnInitialPlatforms();
         Time.timeScale = 0;
 	}
 	
@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour {
         HUD.GetComponentInChildren<Text>().text = ballController.GetScore().ToString();
 	}
 
-    public void SpawnPlatforms()
+    private void SpawnInitialPlatforms()
     {
         int[] x = {2, -2};
         float pos = 0;
@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour {
         instance.transform.parent = GameObject.Find("Platforms").transform;
         pos += 2;
         onX = false;
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 3; i++)
         {            
             if(onX) 
             {
@@ -60,6 +60,12 @@ public class GameController : MonoBehaviour {
                 onX = true;
             }
         }
+    }
+
+    public void SpawnPlatform(float speed) {
+        GameObject instance = Instantiate(platform, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity) as GameObject;
+        instance.transform.parent = GameObject.Find("Platforms").transform;
+        instance.GetComponent<MoveDown>().speed = -speed;
     }
 
     public void StartGame() {

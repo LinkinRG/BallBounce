@@ -12,7 +12,7 @@ public class MoveDown : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.velocity = new Vector3(0, -speed, 0);
+        rb.velocity = new Vector3(0, speed, 0);
     }
 
     public void ChangeSpeed(float newSpeed) 

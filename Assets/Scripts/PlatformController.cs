@@ -24,7 +24,6 @@ public class PlatformController : MonoBehaviour {
             Quaternion pos = Quaternion.identity;
             pos.eulerAngles = new Vector3(0, ((transform.rotation.eulerAngles.y + move * 90) % 360), 0);
             rotating = true;
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, pos, speed * Time.deltaTime);
             StartCoroutine(rotateToNext(pos));
         }       
 	}
