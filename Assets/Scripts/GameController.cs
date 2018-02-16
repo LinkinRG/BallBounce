@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private GameObject HUD;
     [SerializeField] private GameObject gameOver;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private Text score;
 
     private bool onX = true;
     private BallController ballController;
@@ -24,6 +25,14 @@ public class GameController : MonoBehaviour {
         ballController = ball.GetComponent<BallController>();
         SpawnInitialPlatforms();
         Time.timeScale = 0;
+        // PlayerPrefs.SetInt("Score", 0);
+        if (PlayerPrefs.GetInt("Score") > 0)
+        {
+            score.text = PlayerPrefs.GetInt("Score").ToString();
+        }
+        else {
+            score.text = "0";
+        }
 	}
 	
 	// Update is called once per frame
@@ -96,6 +105,10 @@ public class GameController : MonoBehaviour {
         Time.timeScale = 0;
         gameOver.SetActive(true);
         HUD.SetActive(false);
+        if (PlayerPrefs.GetInt("Score") < ballController.GetScore())
+        {
+            PlayerPrefs.SetInt("Score", ballController.GetScore());
+        }
         gameOver.GetComponentInChildren<Text>().text = "SCORE: " + ballController.GetScore();
     }
 
