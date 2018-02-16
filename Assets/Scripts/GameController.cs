@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private GameObject gameOver;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private Text score;
+    //[SerializeField] private GameObject cam;
 
     private bool onX = true;
     private BallController ballController;
@@ -28,11 +29,12 @@ public class GameController : MonoBehaviour {
         // PlayerPrefs.SetInt("Score", 0);
         if (PlayerPrefs.GetInt("Score") > 0)
         {
-            score.text = PlayerPrefs.GetInt("Score").ToString();
+            score.text = "HIGH SCORE: " + PlayerPrefs.GetInt("Score").ToString();
         }
         else {
-            score.text = "0";
+            score.text = "HIGH SCORE: 0";
         }
+        //StartCoroutine(ChangeBackground());
 	}
 	
 	// Update is called once per frame
@@ -43,6 +45,39 @@ public class GameController : MonoBehaviour {
         }
         HUD.GetComponentInChildren<Text>().text = ballController.GetScore().ToString();
 	}
+
+    //IEnumerator ChangeBackground() {
+    //    while(true) {
+    //        yield return new WaitForSeconds(0.1f);
+    //        if(cam.GetComponent<Camera>().backgroundColor.r == 1 && cam.GetComponent<Camera>().backgroundColor.b == 0 && cam.GetComponent<Camera>().backgroundColor.g < 1) {
+    //            Color c = new Vector4(1, cam.GetComponent<Camera>().backgroundColor.g, 0, 0);
+    //            c.g += 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        } else if(cam.GetComponent<Camera>().backgroundColor.b == 0 && cam.GetComponent<Camera>().backgroundColor.g == 1 && cam.GetComponent<Camera>().backgroundColor.r > 0) {
+    //            Color c = new Vector4(cam.GetComponent<Camera>().backgroundColor.r, 1, 0, 0);
+    //            c.r -= 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        } else if(cam.GetComponent<Camera>().backgroundColor.r == 0 && cam.GetComponent<Camera>().backgroundColor.g == 1 && cam.GetComponent<Camera>().backgroundColor.b < 1) {
+    //            Color c = new Vector4(0, 1, cam.GetComponent<Camera>().backgroundColor.b, 0);
+    //            c.b += 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        } else if(cam.GetComponent<Camera>().backgroundColor.r == 0 && cam.GetComponent<Camera>().backgroundColor.b == 1 && cam.GetComponent<Camera>().backgroundColor.g > 0) {
+    //            Color c = new Vector4(0, cam.GetComponent<Camera>().backgroundColor.g, 1, 0);
+    //            c.g -= 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        } else if(cam.GetComponent<Camera>().backgroundColor.g == 0 && cam.GetComponent<Camera>().backgroundColor.b == 1 && cam.GetComponent<Camera>().backgroundColor.r < 1) {
+    //            Color c = new Vector4(cam.GetComponent<Camera>().backgroundColor.r, 0, 1, 0);
+    //            c.r += 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        } else if(cam.GetComponent<Camera>().backgroundColor.r == 1 && cam.GetComponent<Camera>().backgroundColor.g == 0 && cam.GetComponent<Camera>().backgroundColor.b > 0) {
+    //            Color c = new Vector4(1, 0, cam.GetComponent<Camera>().backgroundColor.b, 0);
+    //            c.b -= 0.1f;
+    //            cam.GetComponent<Camera>().backgroundColor = c;
+    //        }
+    //        Debug.Log(cam.GetComponent<Camera>().backgroundColor);
+    //    }
+    //}
+
 
     private void SpawnInitialPlatforms()
     {
